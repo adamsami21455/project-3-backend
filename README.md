@@ -2,9 +2,9 @@
 
 ## Overview
 
-This repository contains the Node.js, Express and MongoDB backend for **GameVault**, a personal gaming library. Players can track the games they own, set each game's completion status (Playing, Completed, Dropped), give it a personal rating, and leave reviews on games in the community.
+This repository contains the Node.js, Express and MongoDB backend for **GameLib**, a personal gaming library. Players can track the games they own, set each game's completion status (Playing, Completed, Dropped), give it a personal rating, and leave reviews on games in the community.
 
-The API handles user authentication with JSON Web Tokens, full CRUD for games, and reviews, with ownership-based authorization so users can only change their own data.
+
 
 ## Related Links
 - **Frontend Repository:** [project-3-frontend](https://github.com/adamsami21455/project-3-frontend)
@@ -93,10 +93,10 @@ backend/
 
 | Field | Type | Rules |
 |---|---|---|
-| `title` | String | Required, trimmed |
+| `title` | String | Required |
 | `platform` | String | One of: PC, PlayStation, Xbox, Switch, Mobile, Other |
 | `genre` | String | Optional |
-| `status` | String | One of: Backlog, Playing, Completed, Dropped. Defaults to Backlog |
+| `status` | String | One of: Playing, Completed, Dropped. Defaults to Playing |
 | `personalRating` | Number | Optional, 1–5 |
 | `coverImage` | String | Optional, image URL |
 | `notes` | String | Optional |
@@ -116,50 +116,6 @@ backend/
 | `updatedAt` | Date | Generated automatically |
 
 ## Entity Relationships
-
-```mermaid
-erDiagram
-    USER ||--o{ GAME : "owns"
-    USER ||--o{ REVIEW : "writes"
-    GAME ||--o{ REVIEW : "has"
-
-    USER {
-        ObjectId _id PK
-        String username
-        String hashedPassword
-    }
-    GAME {
-        ObjectId _id PK
-        String title
-        String platform
-        String genre
-        String status
-        Number personalRating
-        String coverImage
-        String notes
-        ObjectId owner FK
-    }
-    REVIEW {
-        ObjectId _id PK
-        Number rating
-        String body
-        ObjectId game FK
-        ObjectId author FK
-    }
-```
-
-- A **User** owns many **Games**.
-- A **User** writes many **Reviews**.
-- A **Game** has many **Reviews**. Deleting a game also deletes its reviews.
-
-## API Base URL
-
-http://localhost:3000
-
-
-## Endpoints
-
-Authenticated routes need the header `Authorization: Bearer <token>`.
 
 ### Auth
 
